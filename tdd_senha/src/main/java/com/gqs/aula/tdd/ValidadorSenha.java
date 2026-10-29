@@ -12,6 +12,7 @@ public class ValidadorSenha {
     public static final String MSG_TAMANHO_MINIMO = "A senha deve ter pelo menos 8 caracteres";
     public static final String MSG_DIGITOS = "A senha deve conter pelo menos 2 dígitos";
     public static final String MSG_MAIUSCULA = "A senha deve conter pelo menos uma letra maiuscula";
+    public static final String MSG_CARACTERE_ESPECIAL = "A senha deve conter pelo menos um caractere especial";
 
     public ResultadoValidacao validar(String senha) {
         if (senha.length() < TAMANHO_MINIMO) {
@@ -23,8 +24,8 @@ public class ValidadorSenha {
         if (!contem(senha, Character::isUpperCase)) {
             return new ResultadoValidacao(Arrays.asList(MSG_MAIUSCULA));
         }
-        if (!contem(senha, c -> !Character.isLetterOrDigit(c))) {
-            return new ResultadoValidacao(Arrays.asList("A senha deve conter pelo menos um caractere especial"));
+        if (!contem(senha, ValidadorSenha::ehCaractereEspecial)) {
+            return new ResultadoValidacao(Arrays.asList(MSG_CARACTERE_ESPECIAL));
         }
         return new ResultadoValidacao(new ArrayList<>());
     }
@@ -35,5 +36,9 @@ public class ValidadorSenha {
 
     private boolean contem(String senha, IntPredicate regra) {
         return senha.chars().anyMatch(regra);
+    }
+
+    private static boolean ehCaractereEspecial(int caractere) {
+        return !Character.isLetterOrDigit(caractere);
     }
 }
