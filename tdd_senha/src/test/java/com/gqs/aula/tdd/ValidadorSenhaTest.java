@@ -71,4 +71,11 @@ public class ValidadorSenhaTest {
             "A senha deve conter pelo menos 2 dígitos",
             "A senha deve conter pelo menos um caractere especial"), resultado.getErros());
     }
+
+    @Test
+    void deveTratarSenhaNulaComoInvalida() {
+        ResultadoValidacao resultado = validador.validar(null);
+        assertFalse(resultado.isValida());
+        assertEquals(4, resultado.getErros().size());
+    }
 }
