@@ -18,6 +18,15 @@ public class ValidadorSenha {
         if (contarDigitos(senha) < MINIMO_DIGITOS) {
             return new ResultadoValidacao(Arrays.asList(MSG_DIGITOS));
         }
+        boolean temMaiuscula = false;
+        for (char c : senha.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                temMaiuscula = true;
+            }
+        }
+        if (!temMaiuscula) {
+            return new ResultadoValidacao(Arrays.asList("A senha deve conter pelo menos uma letra maiuscula"));
+        }
         return new ResultadoValidacao(new ArrayList<>());
     }
 
