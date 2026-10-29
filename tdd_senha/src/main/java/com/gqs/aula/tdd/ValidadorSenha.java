@@ -12,6 +12,15 @@ public class ValidadorSenha {
         if (senha.length() < TAMANHO_MINIMO) {
             return new ResultadoValidacao(Arrays.asList(MSG_TAMANHO_MINIMO));
         }
+        int digitos = 0;
+        for (char c : senha.toCharArray()) {
+            if (Character.isDigit(c)) {
+                digitos++;
+            }
+        }
+        if (digitos < 2) {
+            return new ResultadoValidacao(Arrays.asList("A senha deve conter pelo menos 2 dígitos"));
+        }
         return new ResultadoValidacao(new ArrayList<>());
     }
 }
