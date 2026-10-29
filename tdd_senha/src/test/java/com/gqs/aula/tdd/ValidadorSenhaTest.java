@@ -57,4 +57,25 @@ public class ValidadorSenhaTest {
         assertFalse(resultado.isValida());
         assertEquals(Arrays.asList("A senha deve conter pelo menos um caractere especial"), resultado.getErros());
     }
+
+    @Test
+    void deveRetornarTodosOsErrosParaMypass() {
+        ValidadorSenha validador = new ValidadorSenha();
+        ResultadoValidacao resultado = validador.validar("mypass");
+        assertFalse(resultado.isValida());
+        assertEquals(Arrays.asList(
+            "A senha deve ter pelo menos 8 caracteres",
+            "A senha deve conter pelo menos 2 dígitos",
+            "A senha deve conter pelo menos uma letra maiuscula",
+            "A senha deve conter pelo menos um caractere especial"), resultado.getErros());
+    }
+
+    @Test
+    void deveRetornarDoisErrosQuandoFaltamDigitosECaractereEspecial() {
+        ValidadorSenha validador = new ValidadorSenha();
+        ResultadoValidacao resultado = validador.validar("Abcdefgh");
+        assertEquals(Arrays.asList(
+            "A senha deve conter pelo menos 2 dígitos",
+            "A senha deve conter pelo menos um caractere especial"), resultado.getErros());
+    }
 }
