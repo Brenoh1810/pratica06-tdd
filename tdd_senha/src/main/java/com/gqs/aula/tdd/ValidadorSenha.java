@@ -15,6 +15,9 @@ public class ValidadorSenha {
     public static final String MSG_CARACTERE_ESPECIAL = "A senha deve conter pelo menos um caractere especial";
 
     public ResultadoValidacao validar(String senha) {
+        if (senha == null) {
+            senha = "";
+        }
         List<String> erros = new ArrayList<>();
         if (senha.length() < TAMANHO_MINIMO) {
             erros.add(MSG_TAMANHO_MINIMO);
