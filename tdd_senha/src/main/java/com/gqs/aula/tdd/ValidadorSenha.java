@@ -1,7 +1,7 @@
 package com.gqs.aula.tdd;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 import java.util.function.IntPredicate;
 
 public class ValidadorSenha {
@@ -15,19 +15,20 @@ public class ValidadorSenha {
     public static final String MSG_CARACTERE_ESPECIAL = "A senha deve conter pelo menos um caractere especial";
 
     public ResultadoValidacao validar(String senha) {
+        List<String> erros = new ArrayList<>();
         if (senha.length() < TAMANHO_MINIMO) {
-            return new ResultadoValidacao(Arrays.asList(MSG_TAMANHO_MINIMO));
+            erros.add(MSG_TAMANHO_MINIMO);
         }
         if (contarDigitos(senha) < MINIMO_DIGITOS) {
-            return new ResultadoValidacao(Arrays.asList(MSG_DIGITOS));
+            erros.add(MSG_DIGITOS);
         }
         if (!contem(senha, Character::isUpperCase)) {
-            return new ResultadoValidacao(Arrays.asList(MSG_MAIUSCULA));
+            erros.add(MSG_MAIUSCULA);
         }
         if (!contem(senha, ValidadorSenha::ehCaractereEspecial)) {
-            return new ResultadoValidacao(Arrays.asList(MSG_CARACTERE_ESPECIAL));
+            erros.add(MSG_CARACTERE_ESPECIAL);
         }
-        return new ResultadoValidacao(new ArrayList<>());
+        return new ResultadoValidacao(erros);
     }
 
     private long contarDigitos(String senha) {
