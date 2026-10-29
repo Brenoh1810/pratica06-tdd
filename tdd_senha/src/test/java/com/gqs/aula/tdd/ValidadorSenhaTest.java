@@ -41,4 +41,12 @@ public class ValidadorSenhaTest {
         ValidadorSenha validador = new ValidadorSenha();
         assertTrue(validador.validar("Abcde@12").isValida());
     }
+
+    @Test
+    void deveRejeitarSenhaSemLetraMaiuscula() {
+        ValidadorSenha validador = new ValidadorSenha();
+        ResultadoValidacao resultado = validador.validar("abcde@12");
+        assertFalse(resultado.isValida());
+        assertEquals(Arrays.asList("A senha deve conter pelo menos uma letra maiuscula"), resultado.getErros());
+    }
 }
