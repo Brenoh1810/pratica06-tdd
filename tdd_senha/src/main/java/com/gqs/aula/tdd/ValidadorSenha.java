@@ -23,6 +23,9 @@ public class ValidadorSenha {
         if (!contem(senha, Character::isUpperCase)) {
             return new ResultadoValidacao(Arrays.asList(MSG_MAIUSCULA));
         }
+        if (!contem(senha, c -> !Character.isLetterOrDigit(c))) {
+            return new ResultadoValidacao(Arrays.asList("A senha deve conter pelo menos um caractere especial"));
+        }
         return new ResultadoValidacao(new ArrayList<>());
     }
 
