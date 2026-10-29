@@ -6,9 +6,10 @@ import org.junit.jupiter.api.Test;
 
 public class ValidadorSenhaTest {
 
+    private final ValidadorSenha validador = new ValidadorSenha();
+
     @Test
     void deveAceitarSenhaQueAtendeTodasAsRegras() {
-        ValidadorSenha validador = new ValidadorSenha();
         ResultadoValidacao resultado = validador.validar("Senha@123");
         assertTrue(resultado.isValida());
         assertTrue(resultado.getErros().isEmpty());
@@ -16,7 +17,6 @@ public class ValidadorSenhaTest {
 
     @Test
     void deveRejeitarSenhaCom7Caracteres() {
-        ValidadorSenha validador = new ValidadorSenha();
         ResultadoValidacao resultado = validador.validar("Abc@123");
         assertFalse(resultado.isValida());
         assertEquals(Arrays.asList("A senha deve ter pelo menos 8 caracteres"), resultado.getErros());
@@ -24,13 +24,11 @@ public class ValidadorSenhaTest {
 
     @Test
     void deveAceitarSenhaComExatamente8Caracteres() {
-        ValidadorSenha validador = new ValidadorSenha();
         assertTrue(validador.validar("Abcd@123").isValida());
     }
 
     @Test
     void deveRejeitarSenhaComApenas1Digito() {
-        ValidadorSenha validador = new ValidadorSenha();
         ResultadoValidacao resultado = validador.validar("Abcdef@1");
         assertFalse(resultado.isValida());
         assertEquals(Arrays.asList("A senha deve conter pelo menos 2 dígitos"), resultado.getErros());
@@ -38,13 +36,11 @@ public class ValidadorSenhaTest {
 
     @Test
     void deveAceitarSenhaComExatamente2Digitos() {
-        ValidadorSenha validador = new ValidadorSenha();
         assertTrue(validador.validar("Abcde@12").isValida());
     }
 
     @Test
     void deveRejeitarSenhaSemLetraMaiuscula() {
-        ValidadorSenha validador = new ValidadorSenha();
         ResultadoValidacao resultado = validador.validar("abcde@12");
         assertFalse(resultado.isValida());
         assertEquals(Arrays.asList("A senha deve conter pelo menos uma letra maiuscula"), resultado.getErros());
@@ -52,7 +48,6 @@ public class ValidadorSenhaTest {
 
     @Test
     void deveRejeitarSenhaSemCaractereEspecial() {
-        ValidadorSenha validador = new ValidadorSenha();
         ResultadoValidacao resultado = validador.validar("Abcdef12");
         assertFalse(resultado.isValida());
         assertEquals(Arrays.asList("A senha deve conter pelo menos um caractere especial"), resultado.getErros());
@@ -60,7 +55,6 @@ public class ValidadorSenhaTest {
 
     @Test
     void deveRetornarTodosOsErrosParaMypass() {
-        ValidadorSenha validador = new ValidadorSenha();
         ResultadoValidacao resultado = validador.validar("mypass");
         assertFalse(resultado.isValida());
         assertEquals(Arrays.asList(
@@ -72,7 +66,6 @@ public class ValidadorSenhaTest {
 
     @Test
     void deveRetornarDoisErrosQuandoFaltamDigitosECaractereEspecial() {
-        ValidadorSenha validador = new ValidadorSenha();
         ResultadoValidacao resultado = validador.validar("Abcdefgh");
         assertEquals(Arrays.asList(
             "A senha deve conter pelo menos 2 dígitos",
