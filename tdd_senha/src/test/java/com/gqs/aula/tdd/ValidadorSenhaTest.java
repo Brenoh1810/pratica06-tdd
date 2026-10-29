@@ -27,4 +27,18 @@ public class ValidadorSenhaTest {
         ValidadorSenha validador = new ValidadorSenha();
         assertTrue(validador.validar("Abcd@123").isValida());
     }
+
+    @Test
+    void deveRejeitarSenhaComApenas1Digito() {
+        ValidadorSenha validador = new ValidadorSenha();
+        ResultadoValidacao resultado = validador.validar("Abcdef@1");
+        assertFalse(resultado.isValida());
+        assertEquals(Arrays.asList("A senha deve conter pelo menos 2 dígitos"), resultado.getErros());
+    }
+
+    @Test
+    void deveAceitarSenhaComExatamente2Digitos() {
+        ValidadorSenha validador = new ValidadorSenha();
+        assertTrue(validador.validar("Abcde@12").isValida());
+    }
 }
